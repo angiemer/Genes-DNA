@@ -28,8 +28,7 @@ struct record dna[598];
 struct unique dna_uniq[299];
 int unique_len=0;
 
-int main()
-{
+int main(){
     Read();
     GetTriplets();
     SetTripletsValues();
@@ -37,8 +36,7 @@ int main()
     getchar();
     return 0;
 }
-void Read()
-{
+void Read(){
 int i,k=0,j,count,number;
     
     char string[1024],n1[7],n2[7],buff[4],*p,*ptr=NULL;
@@ -51,10 +49,8 @@ int i,k=0,j,count,number;
     fpgenes=fopen(filenamegenes,"r");
     fpgenome=fopen(filenamegenome,"r");
 
-    if (fpgenes!=NULL && fpgenome!=NULL)
-    {    
-        for(i=0;i<299;i++)
-        {
+    if (fpgenes!=NULL && fpgenome!=NULL){    
+        for(i=0;i<299;i++){
             int startn; 
             int stopn;
 
@@ -88,29 +84,24 @@ int i,k=0,j,count,number;
         fclose(fpgenes);
         fclose(fpgenome);
     }
-    else
-    {
+    else{
         printf("Something go wrong,cannot open file");
     }
 }
-void GetTriplets()
-{
+void GetTriplets(){
     strcpy(dna_uniq[0].triplet,dna[0].triplet);
     dna_uniq[0].start=0;
     dna_uniq[0].stop=0;
 
-    for(int i=1;i<598;i++)
-    {
+    for(int i=1;i<598;i++){
         int j=0;
         int found=0;
-        while(found==0 && j<=unique_len)
-        {
+        while(found==0 && j<=unique_len){
             if(!strcmp(dna_uniq[j].triplet,dna[i].triplet))
                 found=1;
             j+=1;    
         }
-        if(!found)
-        {
+        if(!found){
             unique_len+=1;
             strcpy(dna_uniq[unique_len].triplet,dna[i].triplet);
             dna_uniq[unique_len].start=0;
@@ -118,23 +109,21 @@ void GetTriplets()
         }
     }
 }
-void SetTripletsValues()
-{
-    for(int i=0;i<unique_len;i++)   
-     for(int j=0;j<598;j++)
-      if(!strcmp(dna_uniq[i].triplet,dna[j].triplet))
-        {
+void SetTripletsValues(){
+    for(int i=0;i<unique_len;i++){   
+     for(int j=0;j<598;j++){
+       if(!strcmp(dna_uniq[i].triplet,dna[j].triplet)){
             dna_uniq[i].start+=dna[j].start;
             dna_uniq[i].stop+=dna[j].stop;
-        }
+       }
+     }
+    }
 }   
-void ShowTriplets()
-{
+void ShowTriplets(){
     printf("\tSTART\n");
     putchar('\n');
     printf("Τριπλέτα\tαριθμός εμφανίσεων\n");
-    for(int i=0;i<unique_len;i++)
-    {
+    for(int i=0;i<unique_len;i++){
         if(dna_uniq[i].start!=0)
             printf("%s\t\t\t%d\n",dna_uniq[i].triplet,dna_uniq[i].start);
     }
@@ -142,25 +131,20 @@ void ShowTriplets()
     printf("\tSTOP\n");
     putchar('\n');
     printf("Τριπλέτα\tαριθμός εμφανίσεων\n");
-    for(int i=0;i<unique_len;i++)
-    {
+    for(int i=0;i<unique_len;i++){
         if(dna_uniq[i].stop!=0)
             printf("%s\t\t\t%d\n",dna_uniq[i].triplet,dna_uniq[i].stop);
     }
 }
-char substring(char destination,char* source,int start,int len)
-{
-    while(len>=0)
-    {
-        if(*source!=',' && *source!='\n')
-        {
+char substring(char destination,char* source,int start,int len){
+    while(len>=0){
+        if(*source!=',' && *source!='\n'){
          *destination=*source;
          ++destination;
          ++source;
          len--;
         }
-        else
-        {
+        else{
          *destination='\0';
          break;
         }
